@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="todolist.css"/>
+    <script src="todolist.js" defer></script>
+</head>
+<body>
+    <div id = "wrapper">
+        <div class="main">
+            <header>
+                <span>To Do list</span>
+            </header>
+            <div class= "inputform">
+                <div>
+                    <input id="inputstart" text="text"/>
+                </div>
+                <div class = "insertform">
+                    <button class = "insert">+</button>
+                </div>
+            </div>
+            <ul class = "todo-list">
+                <li class="todo-item checked">
+                    <div class="checkbox">✔</div>
+                    <div class="todo">첫번째 할 일</div>
+                    <button class="delBtn">삭제</button>
+                    <button class="change">수정</button>
+                    <button class="complete">완료</button>
+                </li>
+                <li class="todo-item">
+                    <div class="checkbox"></div>
+                    <div class="todo">두번째 할 일</div>
+                    <button class="delBtn">삭제</button>
+                    <button class="change">수정</button>
+                    <button class="complete">완료</button>
+                </li>
+                <li class="todo-item">
+                    <div class="checkbox"></div>
+                    <div class="todo">세번째 할 일</div>
+                    <button class="delBtn">삭제</button>
+                    <button class="change">수정</button>
+                    <button class="complete">완료</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

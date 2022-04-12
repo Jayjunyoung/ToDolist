@@ -1,0 +1,106 @@
+html {
+    background-color: aliceblue;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+ul,li {
+    list-style: none; 
+}
+
+#wrapper {
+    min-width: 600px;
+    padding: 50px;
+}
+
+.main {
+    margin: 40px auto;
+    padding: 10px 80px;
+    border: 3px solid lightgray;
+    box-sizing: border-box;
+}
+
+.main header {
+    text-align: center;
+}
+
+.main header span {
+    font-size: 50px;
+    color: slateblue;
+}
+
+.main > .inputform {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.inputform #inputstart {
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.inputform > .insertform  {
+    margin-left: 20px;
+}
+
+.inputform > .insertform button.insert {
+    height: 100%;
+    width: 50px;
+    font-size: 1.5rem;
+}
+
+.checkbox {
+    min-width: none;
+    min-height: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.5rem 0.5rem;
+    border-radius: 50px;
+    border: 1px solid lightgray;
+    cursor: pointer;
+    text-align: center;
+}
+
+.main .todo-list { /* ul태그 */
+    padding-left: 0px;
+}
+
+.main .todo-list li {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap; /* 가로로 한줄에 배치 
+    wrap:여러행에 걸쳐, */
+    flex-direction: row;
+    justify-content: space-between; /* 스페이스간격 균등히*/
+    align-items: center;
+    height: 3rem;
+    border-bottom: 1px solid #ddd;   
+}
+
+
+.todo-list .delBtn,
+.change, /* css같은 속성 적용시킬땐 ,로 묶자*/
+.complete {
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 8%; /* flex 크기 조절 */
+    min-width: 64px; /* 버튼 안깨지도록 */
+}
+
+
+.todo {
+    font-size: 1.3rem;
+    padding: 0 1rem;
+    width: 60%
+}
