@@ -66,7 +66,7 @@ ul,li {
     border-radius: 50px;
     border: 1px solid lightgray;
     cursor: pointer;
-    text-align: center;
+    text-align: center; /* V를 가운데로 정렬*/
 }
 
 .main .todo-list { /* ul태그 */
