@@ -4,24 +4,28 @@ const button = document.querySelector('.insert');
 const todo = document.querySelector('.todo-list');
 const liElem = document.querySelectorAll('.todo-item');
 const delbutton = document.querySelectorAll('.delBtn');
+const change = document.querySelectorAll('.change');
+const finish = document.querySelectorAll('.complete');
 
-const checkbox = document.querySelector('.checkbox');
-const todos = document.querySelector('.todo')
+const checkbox = document.querySelectorAll('.checkbox');
+const todos = document.querySelectorAll('.todo');
 
 //addEventListener : 이벤트 등록 함수
 
-//할 일 추가 로직  - 추가는되는데 css형식이 안따라오네
 button.addEventListener('click', function() {
-    const li = insert.value;
+    let li = insert.value;
     addlist(li);
 });
 
 function addlist(li) {
+    if(li === '') {
+        return //입력안하면 빠져나가도록 
+    }
     const newLi = document.createElement('li');
     newLi.className = 'todo-item';
     newLi.innerHTML = `<div class="checkbox"></div> 
     <div class="todo">${li}</div> <button class="delBtn">삭제</button>  <button class="change">수정</button>  <button class="complete">완료</button>` 
-    todo.appendChild(newLi);
+    todo.appendChild(newLi); //ul에 새로만든 li를 집어넣는다
     insert.value = ''; //값을 추가하면 입력칸에는 값이 안뜨게 할거야
     const shows = todo.querySelectorAll('.delBtn'); //입력한 값에 대해서도 삭제 할수 있도록 했다!
     shows.forEach(show => {
@@ -31,6 +35,13 @@ function addlist(li) {
             parent.removeChild(remove);
         })
     })
+    const completeButtons = todo.querySelectorAll('.complete');
+    completeButtons.forEach(complete => {
+        complete.addEventListener('click', (e) => {
+            let check = e.target.parentNode;
+            check.style.color = 'darkgray';
+        });
+    });
 }
 
 
@@ -47,5 +58,26 @@ delbutton.forEach(del => {
         parent.removeChild(remove);
     });
 });
+
+//완료버튼 - 완료 버튼 누르면 회색으로 바뀌도록 했음
+finish.forEach(fin => {
+    fin.addEventListener('click', function(e) {
+        let check = e.target.parentNode;
+        check.style.color = 'darkgray';
+    });
+})
+
+
+//수정하기 
+//수정누르고 다시 값을 친다음 버튼 누르면 내용이 바껴야함
+change.forEach(chabutton => {
+    chabutton.addEventListener('click', function(e) {
+        let upgrade = e.target.parentNode; //li가 담기겠지
+        const result = upgrade.querySelector('.todo');
+        insert.value = result.innerText; //.todo에 있는 글자를 가져오기 위해 이걸 썼다
+        //수정버튼 누르면 이전값이 입력란에 떠
+        //이걸 어케 기존값에 업데이트 할까
+    });
+})
 
 
