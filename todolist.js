@@ -1,11 +1,13 @@
 const insert = document.querySelector('#inputstart');
 const button = document.querySelector('.insert');
+const newbutton = document.querySelector('.newinsert');
 //selector는 해당하는 그 하나를 가져온다
 const todo = document.querySelector('.todo-list');
-const liElem = document.querySelectorAll('.todo-item');
-const delbutton = document.querySelectorAll('.delBtn');
-const change = document.querySelectorAll('.change');
-const finish = document.querySelectorAll('.complete');
+const liElem = document.querySelectorAll('.todo-item');//모든 li 배열
+
+const delbutton = document.querySelectorAll('.delBtn');//삭제버튼
+const change = document.querySelectorAll('.change');//수정버튼
+const finish = document.querySelectorAll('.complete');//완료버튼
 
 const checkbox = document.querySelectorAll('.checkbox');
 const todos = document.querySelectorAll('.todo');
@@ -35,7 +37,7 @@ function addlist(li) {
             parent.removeChild(remove);
         })
     })
-    const completeButtons = todo.querySelectorAll('.complete');
+    const completeButtons = todo.querySelectorAll('.complete');//입력한 값에 대해서 완료 할수 있도록
     completeButtons.forEach(complete => {
         complete.addEventListener('click', (e) => {
             let check = e.target.parentNode;
@@ -72,12 +74,16 @@ finish.forEach(fin => {
 //수정누르고 다시 값을 친다음 버튼 누르면 내용이 바껴야함
 change.forEach(chabutton => {
     chabutton.addEventListener('click', function(e) {
-        let upgrade = e.target.parentNode; //li가 담기겠지
+        let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
         const result = upgrade.querySelector('.todo');
-        insert.value = result.innerText; //.todo에 있는 글자를 가져오기 위해 이걸 썼다
-        //수정버튼 누르면 이전값이 입력란에 떠
-        //이걸 어케 기존값에 업데이트 할까
+        insert.value = result.innerText; //이전 값이 인풋란에 뜸 
     });
 })
 
+//수정 후 적용하는 새로운 버튼 (V)
 
+newbutton.addEventListener('click', function() {
+    const beforeresult = insert.value; //이전값이 들어가있어
+    const newresult = document.querySelector('#inputstart').value;//새로입력한 값
+    
+})

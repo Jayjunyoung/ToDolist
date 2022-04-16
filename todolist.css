@@ -55,6 +55,21 @@ ul,li {
     height: 100%;
     width: 50px;
     font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+.inputform > div  button.newinsert {
+    height: 100%;
+    width: 50px;
+    font-size: 1.5rem;
+    margin-left: 25px;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.inputform > div  button.newinsert > span {
+    color: green;
 }
 
 .checkbox {
@@ -86,12 +101,23 @@ ul,li {
 }
 
 
-.todo-list .delBtn,
+.todo-list
 .change, /* css같은 속성 적용시킬땐 ,로 묶자*/
 .complete {
     font-weight: bold;
     font-size: 1.5rem;
     background-color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 8%; /* flex 크기 조절 */
+    min-width: 64px; /* 버튼 안깨지도록 */
+}
+
+.todo-list
+.delBtn {
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: rosybrown;
     cursor: pointer;
     border-radius: 10px;
     width: 8%; /* flex 크기 조절 */
