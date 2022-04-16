@@ -80,10 +80,23 @@ change.forEach(chabutton => {
     });
 })
 
-//수정 후 적용하는 새로운 버튼 (V)
+//수정 누르고 적용하는 새로운 버튼 (V)
 
-newbutton.addEventListener('click', function() {
-    const beforeresult = insert.value; //이전값이 들어가있어
-    const newresult = document.querySelector('#inputstart').value;//새로입력한 값
-    
+newbutton.addEventListener('click', function () {
+    const insert = document.querySelector('#inputstart');
+    let li = insert.value;//입력란에 있는 값
+    update(li);//입력란에 있는 값을 넘김
 })
+
+//거의 다옴 - 바뀌는거 까진 됐는데 다 바껴버림
+function update(newElem) { //매개변수엔 전에 입력한 값이 들어가있음
+    const beforeresult = document.querySelectorAll('.todo');//모든 .todo요소 가져오기
+    for(let i = 0; i < beforeresult.length; i++) {
+        if(beforeresult[i].innerText !== newElem) {
+            beforeresult[i].innerText = newElem;
+        }
+        else {
+            return;
+        }
+    }
+}
