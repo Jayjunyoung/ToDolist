@@ -41,7 +41,9 @@ function addlist(li) {
     completeButtons.forEach(complete => {
         complete.addEventListener('click', (e) => {
             let check = e.target.parentNode;
+            const checkbox = check.querySelector('.checkbox');
             check.style.color = 'darkgray';
+            checkbox.innerText = '✔';
         });
     });
 }
@@ -61,14 +63,15 @@ delbutton.forEach(del => {
     });
 });
 
-//완료버튼 - 완료 버튼 누르면 회색으로 바뀌도록 했음
+//완료버튼 - 완료 버튼 누르면 회색으로 바뀌고 V체크 되도록
 finish.forEach(fin => {
     fin.addEventListener('click', function(e) {
         let check = e.target.parentNode;
+        const checkbox = check.querySelector('.checkbox');
         check.style.color = 'darkgray';
+        checkbox.innerText = '✔';
     });
 })
-
 
 //수정하기 
 //수정누르고 다시 값을 친다음 버튼 누르면 내용이 바껴야함
@@ -78,7 +81,7 @@ change.forEach(chabutton => {
         const result = upgrade.querySelector('.todo');
         insert.value = result.innerText; //이전 값이 인풋란에 뜸 
     });
-})
+});
 
 //수정 누르고 적용하는 새로운 버튼 (V)
 
@@ -86,7 +89,7 @@ newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
     let li = insert.value;//입력란에 있는 값
     update(li);//입력란에 있는 값을 넘김
-})
+});
 
 //거의 다옴 - 바뀌는거 까진 됐는데 다 바껴버림
 function update(newElem) { //매개변수엔 전에 입력한 값이 들어가있음
