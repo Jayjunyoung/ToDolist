@@ -11,6 +11,7 @@ const finish = document.querySelectorAll('.complete');//완료버튼
 
 const checkbox = document.querySelectorAll('.checkbox');
 const todos = document.querySelectorAll('.todo');
+let modifyTarget; //모디파이 타겟을 전역으로 만듬
 
 //addEventListener : 이벤트 등록 함수
 
@@ -104,8 +105,8 @@ finish.forEach(fin => {
 change.forEach(chabutton => {
     chabutton.addEventListener('click', function(e) {
         let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
-        const result = upgrade.querySelector('.todo');
-        insert.value = result.innerText; //이전 값이 인풋란에 뜸 
+        modifyTarget = upgrade.querySelector('.todo');//첫번째 할일 즉 내용이 담겨
+        insert.value = modifyTarget.innerText; //이전 값이 인풋란에 뜸 
     });
 });
 
@@ -113,35 +114,17 @@ change.forEach(chabutton => {
 
 newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
-    let li = insert.value;//입력란에 있는 값
-    const newId = id++;
-    const newShow = getTodos().concat({id: newId, Elem: li});
-    setTodos(newShow);;
-    update(todosarray);//새로운 배열을 넘겨
+    let li = insert.value; //입력란에 있는 값
+    update(li); // 입력란에 있는 값 넘김
 });
 
-//거의 다옴 - 바뀌는거 까진 됐는데 다 바껴버림
-function update(newElem) { //매개변수엔 전에 입력한 값이 들어가있음
-    const beforeresult = document.querySelectorAll('.todo');//모든 .todo요소 가져오기
-    const afterresult = beforeresult.getTodos();
-    for(let i = 0; i < afterresult.length; i++) {
-        if(afterresult[i].id == newElem.id) {
-            afterresult[i].innerText = newElem.id.value;
-        }
-        else {
-            return;
-        }
-    }
+/*
+알고리즘: 
+수정버튼 눌러 -> 이전 값이 떠 -> 수정 후 V체크 선택 
+-> modifiyTarget에는 선택한 버튼의 부모노드 li가 담기고
+그 li의 .todo를 담아와 -> 담아온 .todo의 innerText에 입력한 값 대입 
+ */
+function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
+    modifyTarget.innerText = text;
 }
 
-//수정 한거를 기존 리스트에 덮어씌어보자
-let todosarray = [];
-let id = 0; //li가 추가되는것마다 id를 설정하자
-
-const setTodos = (newTodos) => {
-    todosarray = newTodos;
-} 
-
-const getTodos = () => {
-    return todosarray;
-}
