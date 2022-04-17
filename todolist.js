@@ -14,10 +14,24 @@ const todos = document.querySelectorAll('.todo');
 
 //addEventListener : 이벤트 등록 함수
 
+
+const init = () => {
+    insert.addEventListener('keypress', function(e) {
+        if( e.key === 'Enter') {
+            addlist(insert.value);
+        }
+    }) 
+}
+
+init(); //엔터키를 누르면 적용되는 함수
+
+
 button.addEventListener('click', function() {
     let li = insert.value;
     addlist(li);
 });
+
+
 
 function addlist(li) {
     if(li === '') {
@@ -29,6 +43,8 @@ function addlist(li) {
     <div class="todo">${li}</div> <button class="delBtn">삭제</button>  <button class="change">수정</button>  <button class="complete">완료</button>` 
     todo.appendChild(newLi); //ul에 새로만든 li를 집어넣는다
     insert.value = ''; //값을 추가하면 입력칸에는 값이 안뜨게 할거야
+
+    //새로 입력한 값에 대해서도 삭제 할수 있도록 하기
     const shows = todo.querySelectorAll('.delBtn'); //입력한 값에 대해서도 삭제 할수 있도록 했다!
     shows.forEach(show => {
         show.addEventListener('click', (e) => {
@@ -37,6 +53,7 @@ function addlist(li) {
             parent.removeChild(remove);
         })
     })
+    //새로 입력한 값에 대해서도 완료 버튼 눌렀을시 적용 될 수 있도록 하기
     const completeButtons = todo.querySelectorAll('.complete');//입력한 값에 대해서 완료 할수 있도록
     completeButtons.forEach(complete => {
         complete.addEventListener('click', (e) => {
@@ -46,6 +63,15 @@ function addlist(li) {
             checkbox.innerText = '✔';
         });
     });
+    //새로 입력한 값에 대해서도 수정 버튼 눌렀을시 적용 될 수 있도록
+    const updateButtons = todo.querySelectorAll('.change');
+    updateButtons.forEach(update => {
+        update.addEventListener('click', (e) => {
+            let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
+            const result = upgrade.querySelector('.todo');
+            insert.value = result.innerText; //이전 값이 인풋란에 뜸 
+        })
+    })
 }
 
 
@@ -88,18 +114,34 @@ change.forEach(chabutton => {
 newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
     let li = insert.value;//입력란에 있는 값
-    update(li);//입력란에 있는 값을 넘김
+    const newId = id++;
+    const newShow = getTodos().concat({id: newId, Elem: li});
+    setTodos(newShow);;
+    update(todosarray);//새로운 배열을 넘겨
 });
 
 //거의 다옴 - 바뀌는거 까진 됐는데 다 바껴버림
 function update(newElem) { //매개변수엔 전에 입력한 값이 들어가있음
     const beforeresult = document.querySelectorAll('.todo');//모든 .todo요소 가져오기
-    for(let i = 0; i < beforeresult.length; i++) {
-        if(beforeresult[i].innerText !== newElem) {
-            beforeresult[i].innerText = newElem;
+    const afterresult = beforeresult.getTodos();
+    for(let i = 0; i < afterresult.length; i++) {
+        if(afterresult[i].id == newElem.id) {
+            afterresult[i].innerText = newElem.id.value;
         }
         else {
             return;
         }
     }
+}
+
+//수정 한거를 기존 리스트에 덮어씌어보자
+let todosarray = [];
+let id = 0; //li가 추가되는것마다 id를 설정하자
+
+const setTodos = (newTodos) => {
+    todosarray = newTodos;
+} 
+
+const getTodos = () => {
+    return todosarray;
 }
