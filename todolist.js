@@ -11,6 +11,7 @@ const finish = document.querySelectorAll('.complete');//완료버튼
 
 const checkbox = document.querySelectorAll('.checkbox');
 const todos = document.querySelectorAll('.todo');
+let modifyTarget;
 
 //addEventListener : 이벤트 등록 함수
 
@@ -104,8 +105,8 @@ finish.forEach(fin => {
 change.forEach(chabutton => {
     chabutton.addEventListener('click', function(e) {
         let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
-        const result = upgrade.querySelector('.todo');
-        insert.value = result.innerText; //이전 값이 인풋란에 뜸 
+        modifyTarget = upgrade.querySelector('.todo');
+        insert.value = modifyTarget.innerText; //이전 값이 인풋란에 뜸 
     });
 });
 
@@ -113,25 +114,16 @@ change.forEach(chabutton => {
 
 newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
-    let li = insert.value;//입력란에 있는 값
+    let li = insert.value; //입력란에 있는 값
     const newId = id++;
     const newShow = getTodos().concat({id: newId, Elem: li});
-    setTodos(newShow);;
-    update(todosarray);//새로운 배열을 넘겨
+    setTodos(newShow);
+    update(li); // 입력란에 있는 값 넘김
 });
 
 //거의 다옴 - 바뀌는거 까진 됐는데 다 바껴버림
-function update(newElem) { //매개변수엔 전에 입력한 값이 들어가있음
-    const beforeresult = document.querySelectorAll('.todo');//모든 .todo요소 가져오기
-    const afterresult = beforeresult.getTodos();
-    for(let i = 0; i < afterresult.length; i++) {
-        if(afterresult[i].id == newElem.id) {
-            afterresult[i].innerText = newElem.id.value;
-        }
-        else {
-            return;
-        }
-    }
+function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
+    modifyTarget.innerText = text;
 }
 
 //수정 한거를 기존 리스트에 덮어씌어보자
