@@ -105,8 +105,8 @@ finish.forEach(fin => {
 change.forEach(chabutton => {
     chabutton.addEventListener('click', function(e) {
         let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
-        modifyTarget = upgrade.querySelector('.todo');//첫번째 할일 즉 내용이 담겨
-        insert.value = modifyTarget.innerText; //이전 값이 인풋란에 뜸 
+        modifyTarget = upgrade.querySelector('.todo');//그 li의 todo가 담겨
+        insert.value = modifyTarget.innerText; //그 todo의 이너텍스트를 입력란에 뜨도록
     });
 });
 
