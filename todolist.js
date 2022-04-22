@@ -69,9 +69,14 @@ function addlist(li) {
     updateButtons.forEach(update => {
         update.addEventListener('click', (e) => {
             let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
-            const result = upgrade.querySelector('.todo');
-            insert.value = result.innerText; //이전 값이 인풋란에 뜸 
+            modifyTarget = upgrade.querySelector('.todo');
+            insert.value = modifyTarget.innerText; //이전 값이 인풋란에 뜸 
         })
+    })
+    newbutton.addEventListener('click', function() {
+        const insert = document.querySelector('#inputstart');
+        let li = insert.value;
+        update(li);
     })
 }
 
@@ -125,6 +130,6 @@ newbutton.addEventListener('click', function () {
 그 li의 .todo를 담아와 -> 담아온 .todo의 innerText에 입력한 값 대입 
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
-    modifyTarget.innerText = text;
+    modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
 }
 
