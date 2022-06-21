@@ -16,12 +16,33 @@ let modifyTarget; //모디파이 타겟을 전역으로 만듬
 //addEventListener : 이벤트 등록 함수
 
 
+const TODOLIST = "TODOLIST";
+
+
+let wholetodos = [];//저장되는걸 담을 배열 공간
+
+
+function loadtodo() {
+    const todolist = localStorage.getItem(TODOLIST);
+    if(todolist !== null) {
+        const parsedtodos = JSON.parse(todolist);
+
+        parsedtodos.forEach(function (todo) {  
+            addlist(todo.text);
+        });
+    }
+
+}
+
+
+
 const init = () => {
     insert.addEventListener('keypress', function(e) {
         if( e.key === 'Enter') {
             addlist(insert.value);
         }
-    }) 
+    })
+    loadtodo();
 }
 
 init(); //엔터키를 누르면 적용되는 함수
@@ -78,6 +99,17 @@ function addlist(li) {
         let li = insert.value;
         update(li);
     })
+
+
+    const todoObj = {
+        text: li,
+        id: wholetodos.length + 1
+
+
+    };
+
+    wholetodos.push(todoObj); //push: 배열오소에 추가하는 메소드
+    savelist();
 }
 
 
@@ -133,3 +165,6 @@ function update(text) { //매개변수엔 전에 입력한 값이 들어가있�
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
 }
 
+function savelist() {
+    localStorage.setItem(TODOLIST, JSON.stringify(wholetodos));
+}
