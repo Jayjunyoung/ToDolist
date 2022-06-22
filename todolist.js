@@ -22,7 +22,7 @@ const TODOLIST = "TODOLIST";
 let wholetodos = [];//저장되는걸 담을 배열 공간
 
 
-function loadtodo() {
+function loadtodo() { //자동으로 화면에 로컬스토리지의 값이 나오도록 하는 함수
     const todolist = localStorage.getItem(TODOLIST);
     if(todolist !== null) {
         const parsedtodos = JSON.parse(todolist);
@@ -121,11 +121,27 @@ function addlist(li) {
 */  
 delbutton.forEach(del => {
     del.addEventListener('click', function (e) {
-        let remove = e.target.parentNode;
-        let parent = remove.parentNode;
+        let remove = e.target.parentNode;//li
+        let parent = remove.parentNode;//ul
         parent.removeChild(remove);
+
+        parent.split(',');
+        
+        deleteTodos(parent);
     });
 });
+
+function deleteTodos(parent) {
+    const cleanTodos = wholetodos.filter(function fillterFn(todo) {
+
+        return todo.id !== parent.id;
+    });//todo.id와 parent.id가 안 같은 배열을 반환한다.
+
+    wholetodos = cleanTodos;
+    
+    savelist();
+}
+
 
 //완료버튼 - 완료 버튼 누르면 회색으로 바뀌고 V체크 되도록
 finish.forEach(fin => {
@@ -153,6 +169,8 @@ newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
     let li = insert.value; //입력란에 있는 값
     update(li); // 입력란에 있는 값 넘김
+    
+    
 });
 
 /*
@@ -163,6 +181,20 @@ newbutton.addEventListener('click', function () {
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
+
+    const newobj = {
+        text: li,
+        id: wholetodos.length + 1
+
+    };
+
+    if (newobj.id === todoobj.id) {
+        todoobj.text = newobj.text
+
+        wholetodos.push(todoobj)
+        savelist();
+    }
+    
 }
 
 function savelist() {
