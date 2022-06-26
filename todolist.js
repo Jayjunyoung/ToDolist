@@ -73,8 +73,8 @@ function addlist(li) {
             let remove = e.target.parentNode;
             let parent = remove.parentNode;
             parent.removeChild(remove);
-        })
-    })
+        });
+    });
     //새로 입력한 값에 대해서도 완료 버튼 눌렀을시 적용 될 수 있도록 하기
     const completeButtons = todo.querySelectorAll('.complete');//입력한 값에 대해서 완료 할수 있도록
     completeButtons.forEach(complete => {
@@ -124,10 +124,6 @@ delbutton.forEach(del => {
         let remove = e.target.parentNode;//li
         let parent = remove.parentNode;//ul
         parent.removeChild(remove);
-
-        parent.split(',');
-        
-        deleteTodos(parent);
     });
 });
 
@@ -169,8 +165,6 @@ newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
     let li = insert.value; //입력란에 있는 값
     update(li); // 입력란에 있는 값 넘김
-    
-    
 });
 
 /*
@@ -181,20 +175,6 @@ newbutton.addEventListener('click', function () {
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
-
-    const newobj = {
-        text: li,
-        id: wholetodos.length + 1
-
-    };
-
-    if (newobj.id === todoobj.id) {
-        todoobj.text = newobj.text
-
-        wholetodos.push(todoobj)
-        savelist();
-    }
-    
 }
 
 function savelist() {
