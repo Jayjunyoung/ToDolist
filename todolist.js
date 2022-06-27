@@ -72,8 +72,8 @@ function addlist(li) {
         show.addEventListener('click', (e) => {
             
         let li = e.target.parentNode;
-        deletetodo(li);
         li.remove();
+        deletetodo(li);  
         });
     });
     //새로 입력한 값에 대해서도 완료 버튼 눌렀을시 적용 될 수 있도록 하기
@@ -131,8 +131,6 @@ function addlist(li) {
 
 
 function deletetodo(li) {
-    const todolist = localStorage.getItem(TODOLIST);
-
 
     const deleteTodos = wholetodos.filter(todo => {
         return todo.id !== li.id
@@ -180,7 +178,7 @@ newbutton.addEventListener('click', function () {
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
     let updatetodo = modifyTarget;
-    if (updatetodo.id === localStorage.getItem(TODOLIST)) {
+    if (updatetodo.id === localStorage.getItem(TODOLIST).id) {
         savelist();
     }
 }
