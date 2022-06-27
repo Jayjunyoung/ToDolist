@@ -70,9 +70,10 @@ function addlist(li) {
     const shows = todo.querySelectorAll('.delBtn'); //입력한 값에 대해서도 삭제 할수 있도록 했다!
     shows.forEach(show => {
         show.addEventListener('click', (e) => {
-            let remove = e.target.parentNode;
-            let parent = remove.parentNode;
-            parent.removeChild(remove);
+            
+        let li = e.target.parentNode;
+        deletetodo(li);
+        li.remove();
         });
     });
     //새로 입력한 값에 대해서도 완료 버튼 눌렀을시 적용 될 수 있도록 하기
@@ -119,24 +120,27 @@ function addlist(li) {
     li의 부모인 ul을 parent 변수에 할당
     parent에서 li를 리무브 차일드 해버리기!
 */  
-delbutton.forEach(del => {
+/*delbutton.forEach(del => {
     del.addEventListener('click', function (e) {
         let remove = e.target.parentNode;//li
         let parent = remove.parentNode;//ul
         parent.removeChild(remove);
     });
 });
+*/
 
-function deleteTodos(parent) {
-    const cleanTodos = wholetodos.filter(function fillterFn(todo) {
 
-        return todo.id !== parent.id;
-    });//todo.id와 parent.id가 안 같은 배열을 반환한다.
+function deletetodo(li) {
+    const todolist = localStorage.getItem(TODOLIST);
 
-    wholetodos = cleanTodos;
-    
+
+    const deleteTodos = wholetodos.filter(todo => {
+        return todo.id !== li.id
+    });
+    wholetodos = deleteTodos;
     savelist();
 }
+
 
 
 //완료버튼 - 완료 버튼 누르면 회색으로 바뀌고 V체크 되도록
@@ -175,6 +179,10 @@ newbutton.addEventListener('click', function () {
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
+    let updatetodo = modifyTarget;
+    if (updatetodo.id === localStorage.getItem(TODOLIST)) {
+        savelist();
+    }
 }
 
 function savelist() {
