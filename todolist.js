@@ -140,7 +140,6 @@ function deletetodo(event) {
     const li = event.target.parentNode;
     todo.removeChild(li);
 
-
     const deleteTodos = wholetodos.filter(function(todo)  {
         return todo.id !== parseInt(li.id);
     });
