@@ -5,7 +5,7 @@ const newbutton = document.querySelector('.newinsert');
 const todo = document.querySelector('.todo-list');
 const liElem = document.querySelectorAll('.todo-item');//모든 li 배열
 
-const delbutton = document.querySelectorAll('.delBtn');//삭제버튼
+
 const change = document.querySelectorAll('.change');//수정버튼
 const finish = document.querySelectorAll('.complete');//완료버튼
 
@@ -67,15 +67,21 @@ function addlist(li) {
     insert.value = ''; //값을 추가하면 입력칸에는 값이 안뜨게 할거야
 
     //새로 입력한 값에 대해서도 삭제 할수 있도록 하기
+    /*
     const shows = todo.querySelectorAll('.delBtn'); //입력한 값에 대해서도 삭제 할수 있도록 했다!
     shows.forEach(show => {
         show.addEventListener('click', (e) => {
             
         let li = e.target.parentNode;
         li.remove();
-        deletetodo(li);  
+        
+        deletetodo(li);
         });
     });
+    */
+    delbutton = newLi.querySelector('.delBtn');
+    delbutton.addEventListener('click', deletetodo);
+
     //새로 입력한 값에 대해서도 완료 버튼 눌렀을시 적용 될 수 있도록 하기
     const completeButtons = todo.querySelectorAll('.complete');//입력한 값에 대해서 완료 할수 있도록
     completeButtons.forEach(complete => {
@@ -130,13 +136,19 @@ function addlist(li) {
 */
 
 
-function deletetodo(li) {
+function deletetodo(event) { 
+    const li = event.target.parentNode;
+    todo.removeChild(li);
 
-    const deleteTodos = wholetodos.filter(todo => {
-        return todo.id !== li.id
+
+    const deleteTodos = wholetodos.filter(function(todo)  {
+        return todo.id !== parseInt(li.id);
     });
+
     wholetodos = deleteTodos;
+
     savelist();
+
 }
 
 
@@ -162,13 +174,13 @@ change.forEach(chabutton => {
 });
 
 //수정 누르고 적용하는 새로운 버튼 (V)
-
+/*
 newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
     let li = insert.value; //입력란에 있는 값
     update(li); // 입력란에 있는 값 넘김
 });
-
+*/
 /*
 알고리즘: 
 수정버튼 눌러 -> 이전 값이 떠 -> 수정 후 V체크 선택 
@@ -177,10 +189,17 @@ newbutton.addEventListener('click', function () {
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
-    let updatetodo = modifyTarget;
-    if (updatetodo.id === localStorage.getItem(TODOLIST).id) {
-        savelist();
-    }
+    const newobj = {
+        text: modifyTarget.innerText,
+        id: wholetodos.length 
+    };
+    const local = localStorage.getItem(TODOLIST);
+    let obj = JSON.parse(local);
+    obj = newobj;
+    
+    
+    savelist();
+
 }
 
 function savelist() {
