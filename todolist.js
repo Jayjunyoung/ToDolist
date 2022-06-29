@@ -140,10 +140,12 @@ function deletetodo(event) {
     const li = event.target.parentNode;
     todo.removeChild(li);
 
-    const deleteTodos = wholetodos.filter(function(todo)  {
-        return todo.id !== parseInt(li.id);
+    //왜 filter에서 새로운 배열로 만들어지지않을까?
+    const deleteTodos = wholetodos.filter(function(jun) {
+        return jun.id !== parseInt(li.id);
     });
 
+    console.log(deleteTodos); //여기서 작동이 안됌
     wholetodos = deleteTodos;
 
     savelist();
@@ -188,15 +190,10 @@ newbutton.addEventListener('click', function () {
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
-    const newobj = {
-        text: modifyTarget.innerText,
-        id: wholetodos.length 
-    };
-    const local = localStorage.getItem(TODOLIST);
-    let obj = JSON.parse(local);
-    obj = newobj;
-    
-    
+    const newobj = wholetodos.filter(todo => {
+        
+    });
+    wholetodos = newobj;
     savelist();
 
 }
