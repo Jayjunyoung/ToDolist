@@ -5,7 +5,7 @@ const newbutton = document.querySelector('.newinsert');
 const todo = document.querySelector('.todo-list');
 const liElem = document.querySelectorAll('.todo-item');//모든 li 배열
 
-const delbutton = document.querySelectorAll('.delBtn');//삭제버튼
+
 const change = document.querySelectorAll('.change');//수정버튼
 const finish = document.querySelectorAll('.complete');//완료버튼
 
@@ -16,12 +16,33 @@ let modifyTarget; //모디파이 타겟을 전역으로 만듬
 //addEventListener : 이벤트 등록 함수
 
 
+const TODOLIST = "TODOLIST";
+
+
+let wholetodos = [];//저장되는걸 담을 배열 공간
+
+
+function loadtodo() { //자동으로 화면에 로컬스토리지의 값이 나오도록 하는 함수
+    const todolist = localStorage.getItem(TODOLIST);
+    if(todolist !== null) {
+        const parsedtodos = JSON.parse(todolist);
+
+        parsedtodos.forEach(function (todo) {  
+            addlist(todo.text);
+        });
+    }
+
+}
+
+
+
 const init = () => {
     insert.addEventListener('keypress', function(e) {
         if( e.key === 'Enter') {
             addlist(insert.value);
         }
-    }) 
+    })
+    loadtodo();
 }
 
 init(); //엔터키를 누르면 적용되는 함수
@@ -46,14 +67,32 @@ function addlist(li) {
     insert.value = ''; //값을 추가하면 입력칸에는 값이 안뜨게 할거야
 
     //새로 입력한 값에 대해서도 삭제 할수 있도록 하기
+    /*
     const shows = todo.querySelectorAll('.delBtn'); //입력한 값에 대해서도 삭제 할수 있도록 했다!
     shows.forEach(show => {
         show.addEventListener('click', (e) => {
-            let remove = e.target.parentNode;
-            let parent = remove.parentNode;
-            parent.removeChild(remove);
-        })
-    })
+            
+        let li = e.target.parentNode;
+        li.remove();
+        
+        deletetodo(li);
+        });
+    });
+    */
+
+    const todoObj = {
+        text: li,
+        id: wholetodos.length + 1
+
+
+    };
+
+    wholetodos.push(todoObj); 
+    savelist();
+    
+    delbutton = newLi.querySelector('.delBtn');
+    delbutton.addEventListener('click', deletetodo);
+
     //새로 입력한 값에 대해서도 완료 버튼 눌렀을시 적용 될 수 있도록 하기
     const completeButtons = todo.querySelectorAll('.complete');//입력한 값에 대해서 완료 할수 있도록
     completeButtons.forEach(complete => {
@@ -69,10 +108,18 @@ function addlist(li) {
     updateButtons.forEach(update => {
         update.addEventListener('click', (e) => {
             let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
-            const result = upgrade.querySelector('.todo');
-            insert.value = result.innerText; //이전 값이 인풋란에 뜸 
+            modifyTarget = upgrade.querySelector('.todo');
+            insert.value = modifyTarget.innerText; //이전 값이 인풋란에 뜸 
         })
     })
+    newbutton.addEventListener('click', function() {
+        const insert = document.querySelector('#inputstart');
+        let li = insert.value;
+        update(li);
+    })
+
+
+    
 }
 
 
@@ -82,13 +129,35 @@ function addlist(li) {
     li의 부모인 ul을 parent 변수에 할당
     parent에서 li를 리무브 차일드 해버리기!
 */  
-delbutton.forEach(del => {
+/*delbutton.forEach(del => {
     del.addEventListener('click', function (e) {
-        let remove = e.target.parentNode;
-        let parent = remove.parentNode;
+        let remove = e.target.parentNode;//li
+        let parent = remove.parentNode;//ul
         parent.removeChild(remove);
     });
 });
+*/
+
+
+function deletetodo(event) { 
+    event.preventDefault();
+    const li = event.target.parentNode;
+    console.log(li.id);
+    todo.removeChild(li);
+
+    //왜 filter에서 새로운 배열로 만들어지지않을까? -> li의 id를 못가져옴
+    const deleteTodos = wholetodos.filter(function(todo) {
+        return todo.id !== parseInt(li.id);
+    });
+
+    console.log(deleteTodos); //여기서 작동이 안됌
+    wholetodos = deleteTodos;
+
+    savelist();
+
+}
+
+
 
 //완료버튼 - 완료 버튼 누르면 회색으로 바뀌고 V체크 되도록
 finish.forEach(fin => {
@@ -105,19 +174,19 @@ finish.forEach(fin => {
 change.forEach(chabutton => {
     chabutton.addEventListener('click', function(e) {
         let upgrade = e.target.parentNode; //현재 클릭한 버튼의 li가 담기겠지
-        modifyTarget = upgrade.querySelector('.todo');//첫번째 할일 즉 내용이 담겨
-        insert.value = modifyTarget.innerText; //이전 값이 인풋란에 뜸 
+        modifyTarget = upgrade.querySelector('.todo');//그 li의 todo가 담겨
+        insert.value = modifyTarget.innerText; //그 todo의 이너텍스트를 입력란에 뜨도록
     });
 });
 
 //수정 누르고 적용하는 새로운 버튼 (V)
-
+/*
 newbutton.addEventListener('click', function () {
     const insert = document.querySelector('#inputstart');
     let li = insert.value; //입력란에 있는 값
     update(li); // 입력란에 있는 값 넘김
 });
-
+*/
 /*
 알고리즘: 
 수정버튼 눌러 -> 이전 값이 떠 -> 수정 후 V체크 선택 
@@ -125,6 +194,15 @@ newbutton.addEventListener('click', function () {
 그 li의 .todo를 담아와 -> 담아온 .todo의 innerText에 입력한 값 대입 
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
-    modifyTarget.innerText = text;
+    modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
+    const newobj = wholetodos.filter(todo => {
+        
+    });
+    wholetodos = newobj;
+    savelist();
+
 }
 
+function savelist() {
+    localStorage.setItem(TODOLIST, JSON.stringify(wholetodos));
+}

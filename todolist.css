@@ -48,7 +48,7 @@ ul,li {
 }
 
 .inputform > .insertform  {
-    margin-left: 20px;
+    margin-left: 25px;
 }
 
 .inputform > .insertform button.insert {
@@ -73,8 +73,8 @@ ul,li {
 }
 
 .checkbox {
-    min-width: none;
-    min-height: none;
+    min-width: 1.5rem; /* 체크박스 높이 넓이 고정 */
+    min-height: 1.5rem;
     width: 1.5rem;
     height: 1.5rem;
     margin: 0.5rem 0.5rem;
@@ -110,7 +110,7 @@ ul,li {
     cursor: pointer;
     border-radius: 10px;
     width: 8%; /* flex 크기 조절 */
-    min-width: 64px; /* 버튼 안깨지도록 */
+    min-width: 93px; /* 버튼 안깨지도록 */
 }
 
 .todo-list
@@ -121,12 +121,16 @@ ul,li {
     cursor: pointer;
     border-radius: 10px;
     width: 8%; /* flex 크기 조절 */
-    min-width: 64px; /* 버튼 안깨지도록 */
+    min-width: 93px; /* 버튼 안깨지도록 */
 }
 
-
+.todo-list 
 .todo {
     font-size: 1.3rem;
     padding: 0 1rem;
-    width: 60%
+    width: 60%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* 1줄로 고정시키겠다 */
+    overflow: hidden;
 }
