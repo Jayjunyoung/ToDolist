@@ -19,6 +19,7 @@ let modifyTarget; //모디파이 타겟을 전역으로 만듬
 const TODOLIST = "TODOLIST";
 
 
+
 let wholetodos = [];//저장되는걸 담을 배열 공간
 
 
@@ -55,14 +56,16 @@ button.addEventListener('click', function() {
 
 
 
-function addlist(li) {
-    if(li === '') {
+function addlist(text) {
+    if(text === '') {
         return //입력안하면 빠져나가도록 
     }
+    const id = '' + (wholetodos.length + 1);
     const newLi = document.createElement('li');
+    newLi.id = id;
     newLi.className = 'todo-item';
     newLi.innerHTML = `<div class="checkbox"></div> 
-    <div class="todo">${li}</div> <button class="delBtn">삭제</button>  <button class="change">수정</button>  <button class="complete">완료</button>` 
+    <div class="todo">${text}</div> <button class="delBtn">삭제</button>  <button class="change">수정</button>  <button class="complete">완료</button>` 
     todo.appendChild(newLi); //ul에 새로만든 li를 집어넣는다
     insert.value = ''; //값을 추가하면 입력칸에는 값이 안뜨게 할거야
 
@@ -81,15 +84,27 @@ function addlist(li) {
     */
 
     const todoObj = {
-        text: li,
-        id: wholetodos.length + 1
+        text: text,
+        id: id
 
 
     };
-
-    wholetodos.push(todoObj); 
-    savelist();
     
+    
+    wholetodos.push(todoObj); 
+    const local = localStorage.getItem(TODOLIST);
+    for(i = 0; i < local.length; i++) {
+        if(todoObj.id === local[i].id) {
+            const todoObj2 = {
+                text: text,
+                id: id + "1"
+            };
+            wholetodos.push(todoObj2);
+            savelist();
+        }
+    }
+    savelist();
+
     delbutton = newLi.querySelector('.delBtn');
     delbutton.addEventListener('click', deletetodo);
 
@@ -142,12 +157,12 @@ function addlist(li) {
 function deletetodo(event) { 
     event.preventDefault();
     const li = event.target.parentNode;
-    console.log(li.id);
+
     todo.removeChild(li);
 
     //왜 filter에서 새로운 배열로 만들어지지않을까? -> li의 id를 못가져옴
     const deleteTodos = wholetodos.filter(function(todo) {
-        return todo.id !== parseInt(li.id);
+        return todo.id !== li.id;
     });
 
     console.log(deleteTodos); //여기서 작동이 안됌
@@ -195,10 +210,12 @@ newbutton.addEventListener('click', function () {
  */
 function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
-    const newobj = wholetodos.filter(todo => {
-        
-    });
-    wholetodos = newobj;
+    let li = modifyTarget.parentNode;
+    let local = localStorage.getItem(TODOLIST);
+    if(li.id === local.id) {
+        local.text = li.text;
+    }
+    
     savelist();
 
 }
