@@ -79,6 +79,17 @@ function addlist(li) {
         });
     });
     */
+
+    const todoObj = {
+        text: li,
+        id: wholetodos.length + 1
+
+
+    };
+
+    wholetodos.push(todoObj); 
+    savelist();
+    
     delbutton = newLi.querySelector('.delBtn');
     delbutton.addEventListener('click', deletetodo);
 
@@ -108,15 +119,7 @@ function addlist(li) {
     })
 
 
-    const todoObj = {
-        text: li,
-        id: wholetodos.length + 1
-
-
-    };
-
-    wholetodos.push(todoObj); //push: 배열오소에 추가하는 메소드
-    savelist();
+    
 }
 
 
@@ -137,12 +140,14 @@ function addlist(li) {
 
 
 function deletetodo(event) { 
+    event.preventDefault();
     const li = event.target.parentNode;
+    console.log(li.id);
     todo.removeChild(li);
 
-    //왜 filter에서 새로운 배열로 만들어지지않을까?
-    const deleteTodos = wholetodos.filter(function(jun) {
-        return jun.id !== parseInt(li.id);
+    //왜 filter에서 새로운 배열로 만들어지지않을까? -> li의 id를 못가져옴
+    const deleteTodos = wholetodos.filter(function(todo) {
+        return todo.id !== parseInt(li.id);
     });
 
     console.log(deleteTodos); //여기서 작동이 안됌
