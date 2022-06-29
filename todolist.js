@@ -211,7 +211,6 @@ newbutton.addEventListener('click', function () {
 function update(upli) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = upli;//입력란에 넣은 값을 그 li todo값에 대입
     let li = modifyTarget.parentNode;
-    console.log(li.text);
     const local = localStorage.getItem(TODOLIST);
     if(local !== null) {
         const localtodos = JSON.parse(local);
@@ -220,11 +219,15 @@ function update(upli) { //매개변수엔 전에 입력한 값이 들어가있�
             if(todo.id === li.id) {
                 todo.text = li.text;
                 savelist();
+                console.log(li.text);
+                console.log(todo.text);
+                console.log(todo.id);
+                console.log(li.id);
             }
         });      
     }
-    console.log(li.id); //li의 id는 잘출력됨
-    console.log(todo.text);
+ //li의 id는 잘출력됨
+
     
 
 }
