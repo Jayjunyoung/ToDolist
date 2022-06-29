@@ -208,15 +208,24 @@ newbutton.addEventListener('click', function () {
 -> modifiyTarget에는 선택한 버튼의 부모노드 li가 담기고
 그 li의 .todo를 담아와 -> 담아온 .todo의 innerText에 입력한 값 대입 
  */
-function update(text) { //매개변수엔 전에 입력한 값이 들어가있음
-    modifyTarget.innerText = text;//입력란에 넣은 값을 그 li todo값에 대입
+function update(upli) { //매개변수엔 전에 입력한 값이 들어가있음
+    modifyTarget.innerText = upli;//입력란에 넣은 값을 그 li todo값에 대입
     let li = modifyTarget.parentNode;
-    let local = localStorage.getItem(TODOLIST);
-    if(li.id === local.id) {
-        local.text = li.text;
+    console.log(li.text);
+    const local = localStorage.getItem(TODOLIST);
+    if(local !== null) {
+        const localtodos = JSON.parse(local);
+
+        localtodos.forEach(todo => {
+            if(todo.id === li.id) {
+                todo.text = li.text;
+                savelist();
+            }
+        });      
     }
+    console.log(li.id); //li의 id는 잘출력됨
+    console.log(todo.text);
     
-    savelist();
 
 }
 
