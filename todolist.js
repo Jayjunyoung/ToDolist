@@ -60,7 +60,9 @@ function addlist(text) {
     if(text === '') {
         return //입력안하면 빠져나가도록 
     }
-    const id = '' + (wholetodos.length + 1);
+    const id = Math.max(wholetodos.map(function(a) {
+        return Number(a.id);
+    }))+1 + '';
     const newLi = document.createElement('li');
     newLi.id = id;
     newLi.className = 'todo-item';
@@ -92,17 +94,7 @@ function addlist(text) {
     
     
     wholetodos.push(todoObj); 
-    const local = localStorage.getItem(TODOLIST);
-    for(i = 0; i < local.length; i++) {
-        if(todoObj.id === local[i].id) {
-            const todoObj2 = {
-                text: text,
-                id: id + "1"
-            };
-            wholetodos.push(todoObj2);
-            savelist();
-        }
-    }
+
     savelist();
 
     delbutton = newLi.querySelector('.delBtn');
@@ -157,7 +149,7 @@ function addlist(text) {
 function deletetodo(event) { 
     event.preventDefault();
     const li = event.target.parentNode;
-
+    console.log(li.id);
     todo.removeChild(li);
 
     //왜 filter에서 새로운 배열로 만들어지지않을까? -> li의 id를 못가져옴
