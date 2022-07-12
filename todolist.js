@@ -60,9 +60,7 @@ function addlist(text) {
     if(text === '') {
         return //입력안하면 빠져나가도록 
     }
-    const id = Math.max(wholetodos.map(function(a) {
-        return Number(a.id);
-    }))+1 + '';
+    const id = Math.max(wholetodos.map(a => a.id)) + 1 + '';
     const newLi = document.createElement('li');
     newLi.id = id;
     newLi.className = 'todo-item';
