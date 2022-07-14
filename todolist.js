@@ -60,7 +60,7 @@ function addlist(text) {
     if(text === '') {
         return //입력안하면 빠져나가도록 
     }
-    const id = Math.max(...wholetodos.map(a => a.id)) + 1 + '';
+    const id = wholetodos.reduce((max, val) => max.id > val.id ? max.id : val.id , 0);
     const newLi = document.createElement('li');
     newLi.id = id;
     console.log(newLi.id);
@@ -86,7 +86,7 @@ function addlist(text) {
 
     const todoObj = {
         text: text,
-        id: id 
+        id: id + 1 
 
 
     };
