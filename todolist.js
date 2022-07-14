@@ -62,7 +62,7 @@ function addlist(text) {
     }
     const id = wholetodos.reduce((max, val) => max.id > val.id ? max.id : val.id , 0);
     const newLi = document.createElement('li');
-    newLi.id = id;
+    newLi.id = id + 1;
     console.log(newLi.id);
     newLi.className = 'todo-item';
     newLi.innerHTML = `<div class="checkbox"></div> 
