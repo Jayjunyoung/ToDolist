@@ -60,9 +60,10 @@ function addlist(text) {
     if(text === '') {
         return //입력안하면 빠져나가도록 
     }
-    const id = Math.max(wholetodos.map(a => a.id)) + 1 + '';
+    const id = Math.max(...wholetodos.map(a => a.id)) + 1 + '';
     const newLi = document.createElement('li');
     newLi.id = id;
+    console.log(newLi.id);
     newLi.className = 'todo-item';
     newLi.innerHTML = `<div class="checkbox"></div> 
     <div class="todo">${text}</div> <button class="delBtn">삭제</button>  <button class="change">수정</button>  <button class="complete">완료</button>` 
@@ -85,7 +86,7 @@ function addlist(text) {
 
     const todoObj = {
         text: text,
-        id: id
+        id: id 
 
 
     };
