@@ -86,7 +86,7 @@ function addlist(text) {
 
     const todoObj = {
         text: text,
-        id: id + 1 
+        id: id + 1 //로컬저장소에 추가되는 아이디도 +1을 해서 newLi.id랑 같은 id가 되도록 맞쳐주기
 
 
     };
@@ -151,9 +151,9 @@ function deletetodo(event) {
     console.log(li.id);
     todo.removeChild(li);
 
-    //왜 filter에서 새로운 배열로 만들어지지않을까? -> li의 id를 못가져옴
+    //왜 filter에서 새로운 배열로 만들어지지않을까? 
     const deleteTodos = wholetodos.filter(function(todo) {
-        return todo.id !== li.id;
+        return String(todo.id) !== String(li.id);
     });
 
     console.log(deleteTodos); //여기서 작동이 안됌
