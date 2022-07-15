@@ -202,16 +202,22 @@ newbutton.addEventListener('click', function () {
 function update(upli) { //매개변수엔 전에 입력한 값이 들어가있음
     modifyTarget.innerText = upli;//입력란에 넣은 값을 그 li todo값에 대입
     let li = modifyTarget.parentNode;
-    const current = wholetodos.map(a => a.id);
-    if(li.id === current.id) {
-        console.log(li.text);
-        console.log(current.text);
-        savelist();
-    };
-
-    
+    const local = JSON.parse(localStorage.getItem(TODOLIST));
+    for(i = 0; i < local.length; i++) {
+        if(Number(li.id) === local[i].id) {
+            local[i].text = modifyTarget.innerText
+            const updateObj = {
+                text: local[i].text,
+                id: local[i].id 
+            };
+            wholetodos.id = updateObj.id;
+            wholetodos.text = updateObj.text;
+            console.log(wholetodos.id);
+            savelist();
+        };
+    }
 }
-
+//로컬저장소에 데이터를 넣어주는 함수
 function savelist() {
     localStorage.setItem(TODOLIST, JSON.stringify(wholetodos));
 }
