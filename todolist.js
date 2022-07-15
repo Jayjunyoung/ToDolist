@@ -210,9 +210,9 @@ function update(upli) { //매개변수엔 전에 입력한 값이 들어가있�
                 text: local[i].text,
                 id: local[i].id 
             };
-            wholetodos.id = updateObj.id;
-            wholetodos.text = updateObj.text;
-            console.log(wholetodos.id);
+            let wholetodos2 = [];
+            wholetodos2.push(updateObj);
+            wholetodos = wholetodos2
             savelist();
         };
     }
