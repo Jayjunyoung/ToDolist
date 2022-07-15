@@ -212,8 +212,7 @@ function update(upli) { //매개변수엔 전에 입력한 값이 들어가있�
             };
             let wholetodos2 = [];
             wholetodos2.push(updateObj);
-            wholetodos = wholetodos2
-            savelist();
+            wholetodos = wholetodos2;
         };
     }
 }
