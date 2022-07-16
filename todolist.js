@@ -206,13 +206,16 @@ function update(upli) { //매개변수엔 전에 입력한 값이 들어가있�
     for(i = 0; i < local.length; i++) {
         if(Number(li.id) === local[i].id) {
             local[i].text = modifyTarget.innerText
+            //수정누르고 새로 입력한 값이 아이디가 똑같은
+            //부분에 있는 text로 들어간다
             const updateObj = {
                 text: local[i].text,
                 id: local[i].id 
             };
-            let wholetodos2 = [];
-            wholetodos2.push(updateObj);
-            wholetodos = wholetodos2;
+            wholetodos[i].text = updateObj.text
+            //updateObj.text에는 이미 아이디가 똑같은 
+            //부분에 새로운 text가 들어가져있음
+            savelist();
         };
     }
 }
